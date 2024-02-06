@@ -1,37 +1,45 @@
 package github.guisofiati.intrographql.controllers;
 
-import github.guisofiati.intrographql.entities.Author;
 import github.guisofiati.intrographql.entities.Book;
+import github.guisofiati.intrographql.services.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+import java.util.List;
+import java.util.Optional;
+
+@Controller
+@RequiredArgsConstructor
 public class BookController {
 
-    /*
-    query: http://localhost:8080/graphiql
-    query bookDetails {
-        bookById(id: "book-1") {
-            id
-            name
-            #pageCount
-            author {
-              id
-              #firstName
-              lastName
-            }
-        }
-    }
-     */
-    @QueryMapping // binds this method to the query 'getById'
-    public Book bookById(@Argument String id) {
-        return Book.getById(id);
+    final BookService bookService;
+
+    // @SchemaMapping(typeName = "Query", value = "findAllBooks")
+    @QueryMapping // method's name must be equal to the name defined at Query {}
+    public List<Book> findAllBooks() {
+        return bookService.findAllBooks();
     }
 
-    @SchemaMapping // binds this method to a field in graphql schema
-    public Author author(Book book) {
-        return Author.getById(book.authorId());
+    @QueryMapping
+    public Optional<Book> findBookById(@Argument String id) { // argument name must be the same as declared in schema
+        return bookService.findBookById(id);
+    }
+
+    @MutationMapping
+    public Book insertBook(@Argument String name, @Argument Integer pages, @Argument String author) {
+        return bookService.insertBook(name, pages, author);
+    }
+
+    @MutationMapping
+    public Book updateBook(@Argument String id, @Argument String name, @Argument Integer pages, @Argument String author) {
+        return bookService.updateBook(id, name, pages, author);
+    }
+
+    @MutationMapping
+    public boolean deleteBook(@Argument String id) {
+        return bookService.deleteBook(id);
     }
 }

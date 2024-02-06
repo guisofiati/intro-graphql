@@ -1,17 +1,22 @@
 package github.guisofiati.intrographql.entities;
 
-import java.util.Arrays;
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.Data;
 
-public record Book(String id, String name, int pageCount, String authorId) {
+import java.util.UUID;
 
-    private static List<Book> books = Arrays.asList(
-            new Book("book-1", "Harry Potter and the Philosopher's Stone", 223, "author-1"),
-            new Book("book-2", "Moby Dick", 635, "author-2"),
-            new Book("book-3", "Interview with the vampire", 371, "author-3")
-    );
+@Entity
+@Table(name = "TB_BOOKS")
+@Data
+public class Book {
 
-    public static Book getById(String id) {
-        return books.stream().filter(book -> book.id().equals(id)).findFirst().orElse(null);
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private String name;
+    private Integer pages;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 }
