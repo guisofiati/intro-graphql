@@ -20,7 +20,7 @@
 ### Find author by id:
 ```
 query {
-    findAuthorById(id:"some-id") {
+    findAuthorById(id: "some-id") {
         id firstName lastName
     }
 }
@@ -31,7 +31,7 @@ query {
 ### Insert new author:
 ```
 mutation {
-    insertAuthor(firstName:"Bar", lastName:"Foo") {
+    insertAuthor(firstName: "Bar", lastName: "Foo") {
         id, firstName, lastName
     }
 }
@@ -57,7 +57,7 @@ mutation {
 - Cannot delete if there's books registered with this author
 ```
 mutation {
-    deleteAuthor(id:"some-id")
+    deleteAuthor(id: "some-id")
 }
 ```
 
@@ -86,7 +86,7 @@ query {
 ### Find book by id:
 ```
 query {
-    findBookById(id:"some-id") {
+    findBookById(id: "some-id") {
         id
         name
         pages
@@ -104,7 +104,7 @@ query {
 ### Insert new book:
 ```
 mutation {
-  insertBook(name:"GraphQL", pages: 56, author: "some-id") {
+  insertBook(name: "GraphQL", pages: 56, author: "some-id") {
       id
       name
       pages
@@ -123,7 +123,7 @@ mutation {
 - Fields are optional except **id**
 ```
 mutation {
-  updateBook(id:"some-id", pages: 106) {
+  updateBook(id: "some-id", pages: 106) {
     id
     name
     pages
