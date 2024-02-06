@@ -141,7 +141,7 @@ mutation {
 ### Delete book:
 ```
 mutation {
-  deleteBook(id: "24c80f2f-8e80-4480-8757-730d94f4a8b0")
+  deleteBook(id: "some-id")
 }
 ```
 
